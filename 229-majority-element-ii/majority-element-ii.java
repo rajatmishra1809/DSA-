@@ -1,18 +1,53 @@
 import java.util.*;
 
 class Solution {
+
     public List<Integer> majorityElement(int[] nums) {
 
-        HashMap<Integer, Integer> map = new HashMap<>();
+        int candidate1 = 0, candidate2 = 0;
+        int count1 = 0, count2 = 0;
+
+        // First pass: find potential candidates
+        for (int num : nums) {
+
+            if (num == candidate1) {
+                count1++;
+            }
+            else if (num == candidate2) {
+                count2++;
+            }
+            else if (count1 == 0) {
+                candidate1 = num;
+                count1 = 1;
+            }
+            else if (count2 == 0) {
+                candidate2 = num;
+                count2 = 1;
+            }
+            else {
+                count1--;
+                count2--;
+            }
+        }
+
+        // Second pass: verify candidates
+        count1 = 0;
+        count2 = 0;
+
+        for (int num : nums) {
+            if (num == candidate1)
+                count1++;
+            else if (num == candidate2)
+                count2++;
+        }
+
         List<Integer> ans = new ArrayList<>();
 
-        for(int num : nums)
-            map.put(num, map.getOrDefault(num, 0) + 1);
+        if (count1 > nums.length / 3)
+            ans.add(candidate1);
 
-        for(int key : map.keySet()) {
-            if(map.get(key) > nums.length / 3)
-                ans.add(key);
-        }
+        if (count2 > nums.length / 3)
+            ans.add(candidate2);
 
         return ans;
     }
