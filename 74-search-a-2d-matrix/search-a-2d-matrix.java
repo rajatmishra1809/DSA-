@@ -21,9 +21,9 @@ public class Solution {
             if (midValue == target) {
                 return true;
             } else if (midValue < target) {
-                low = mid + 1; // Search right half
+                low = mid + 1; 
             } else {
-                high = mid - 1; // Search left half
+                high = mid - 1; 
             }
         }
         
